@@ -1,0 +1,31 @@
+column_name,data_type,description,modelling_notes
+ticket_id,string,Unique support ticket identifier.,Identifier. Do not use as a predictive feature.
+account_id,string,Customer account identifier.,High-cardinality identifier; usually exclude or aggregate carefully.
+customer_segment,categorical,"Customer size/type: SMB, Mid-Market, Enterprise, Public Sector.",Useful business segmentation feature.
+uk_region,categorical,UK region attached to the customer account.,Contains inconsistent casing/trailing spaces intentionally.
+support_channel,categorical,How the customer submitted the ticket.,Contains inconsistent category spelling intentionally.
+product_area,categorical,Product/module affected by the ticket.,Has some missing values and inconsistent casing.
+issue_category,categorical,Main issue type assigned at ticket intake.,Useful feature for modelling and EDA.
+priority_initial,categorical,Priority level set when the ticket first arrived.,May be missing/noisy; usable feature if available at prediction time.
+submitted_at,datetime,Ticket creation timestamp.,Use for date/time features; has some missing values.
+day_of_week,categorical,Day name derived from submitted_at.,Can be recreated from submitted_at.
+hour_of_day,integer,Hour of ticket submission.,Useful for workload/time features.
+customer_tenure_months,integer,Months since customer started contract.,Contains missing values.
+contract_value_gbp,float,Annual contract value in GBP.,Contains high outliers.
+previous_tickets_90d,integer,Count of prior tickets in the past 90 days.,Useful support-history feature.
+avg_sentiment_score,float,Synthetic sentiment score from -1 to +1.,Missing values present; can be treated as text-derived signal.
+customer_message,text,Short synthetic ticket message.,Use only simple text-derived features unless optional extension is attempted.
+message_length,integer,Character length of customer_message.,Simple text-derived feature.
+contains_urgent_keyword,binary,Whether the message has urgency-like wording.,Feature available at intake.
+contains_refund_keyword,binary,Whether the message has refund/billing-dispute wording.,Feature available at intake.
+agent_queue_length_at_submit,integer,Queue length when ticket arrived.,Includes a few negative values intentionally as data-quality errors.
+assigned_agent,categorical,Agent initially assigned.,Use with caution; may encode operational bias or rota effects.
+agent_experience_months,integer,Experience of assigned agent in months.,Feature available after assignment.
+backlog_age_hours,float,Estimated oldest backlog age in the queue at submission.,Contains outliers.
+first_response_minutes,integer,Minutes before first response.,Potentially unavailable at initial prediction time; can be used for post-intake model only.
+reopened_last_90d,binary,Whether this account had a reopened case in the past 90 days.,Useful support-history feature.
+resolved_at,datetime,Resolution timestamp.,LEAKAGE RISK: after outcome; do not use to predict SLA breach at intake.
+escalated_prior_to_resolution,binary,Whether case was escalated before resolution.,LEAKAGE RISK for intake prediction; post-event information.
+resolution_hours,float,Total time to resolution.,Regression target or leakage risk for SLA breach classification.
+final_priority,categorical,Final priority after investigation/escalation.,LEAKAGE RISK for initial triage prediction.
+sla_breached,binary,Target: whether the case breached SLA.,Primary classification target.
