@@ -24,6 +24,8 @@ The project follows a complete machine learning workflow including:
 - Threshold optimisation
 - Risk assessment
 - Governance documentation
+- Develop a rule-based AI triage explanation layer
+
 
 ---
 
@@ -50,6 +52,8 @@ The goal of this project is to predict whether a newly created support ticket is
 - Optimise model performance using cross-validation
 - Evaluate business trade-offs through threshold analysis
 - Create governance, risk and monitoring documentation
+- Develop a rule-based AI triage explanation layer
+
 
 ---
 
@@ -204,6 +208,44 @@ These variables exhibited strong relationships with SLA outcomes.
 
 ---
 
+## AI Triage Assistant
+
+As an optional extension, a rule-based AI Triage Assistant was developed to improve model transparency and support operational decision-making.
+
+The assistant:
+
+* Loads the trained SLA breach prediction model
+* Generates breach probabilities for incoming tickets
+* Identifies key risk factors using business rules
+* Produces human-readable explanations
+* Recommends operational actions based on risk level
+
+### Example Output
+
+```text
+Prediction Probability: 100.0%
+
+Main Risk Factors:
+- Critical priority ticket
+- Service outage issue
+- Enterprise customer
+- High agent queue length
+- High backlog age
+- Negative customer sentiment
+- Urgent language detected
+
+Recommended Action:
+Escalate immediately and assign to a senior support agent.
+```
+
+### Business Value
+
+The AI Triage Assistant converts model predictions into actionable business insights by explaining why a ticket is considered high risk and suggesting appropriate operational actions.
+
+The solution was implemented using a rule-based explanation engine without external APIs, demonstrating explainable AI principles and human-in-the-loop decision support.
+
+---
+
 ## Cross-Validation Results
 
 5-Fold Stratified Cross Validation
@@ -306,10 +348,11 @@ AI_Support_Operations_SLA_Breach_Prediction/
 │   └── workflows/
 │       └── ci.yml
 │
-├── README.md
+├── README.md 07_triage_explanation_layer.py
 ├── requirements.txt
 ├── .gitignore
 └── LICENSE
+
 ```
 
 ---
