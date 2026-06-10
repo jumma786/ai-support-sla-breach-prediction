@@ -1,0 +1,1 @@
+\"\"\"Main entry point for running the API.\"\"\"\n\nimport uvicorn\nfrom src.config import settings\n\nif __name__ == \"__main__\":\n    uvicorn.run(\n        \"src.api.app:create_app\",\n        host=settings.api_host,\n        port=settings.api_port,\n        reload=settings.debug,\n        log_level=settings.log_level.lower()\n    )\n
