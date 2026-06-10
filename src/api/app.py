@@ -39,7 +39,8 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title=settings.api_title,
         version=settings.api_version,
-        description="Production ML API for predicting SLA breaches"
+        description="Production ML API for predicting SLA breaches",
+        lifespan=lifespan
     )
     
     # Add CORS middleware
