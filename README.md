@@ -2,6 +2,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-MachineLearning-orange)
+![FastAPI](https://img.shields.io/badge/FastAPI-REST%20API-green)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
@@ -25,7 +26,60 @@ The project follows a complete machine learning workflow including:
 - Risk assessment
 - Governance documentation
 - Develop a rule-based AI triage explanation layer
+- Production deployment as a FastAPI REST service with automated tests and CI
 
+---
+
+## Quick Start
+
+```bash
+# Clone and set up
+git clone https://github.com/jumma786/ai-support-sla-breach-prediction.git
+cd ai-support-sla-breach-prediction
+pip install -r requirements.txt
+
+# Train the model (saves models/sla_breach_pipeline.joblib)
+python scripts/train_model.py
+
+# Start the API
+uvicorn src.api.app:create_app --factory --host 0.0.0.0 --port 8000
+
+# Verify
+curl http://localhost:8000/health
+# Interactive docs: http://localhost:8000/docs
+
+# Run tests
+pytest tests/ -v
+```
+
+### Example Prediction
+
+```bash
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "customer_segment": "Enterprise",
+    "priority_initial": "Critical",
+    "issue_category": "service_outage",
+    "agent_queue_length_at_submit": 50,
+    "backlog_age_hours": 18.0,
+    "negative_sentiment_flag": 1,
+    "message_has_deadline": 1
+  }'
+```
+
+Response:
+
+```json
+{
+  "prediction": 1,
+  "probability": 0.9988,
+  "confidence": 0.9988,
+  "threshold": 0.5,
+  "recommendation": "Escalate immediately",
+  "risk_factors": ["Critical priority", "High queue length", "High backlog age", "Negative sentiment", "Urgent deadline"]
+}
+```
 
 ---
 
@@ -307,12 +361,18 @@ Validation using historical operational support-ticket data is required before d
 
 ---
 
+## Production Deployment (Implemented)
+
+- FastAPI REST API (`/health`, `/predict`, `/predict-batch`) with Swagger docs at `/docs`
+- Reproducible model training via `scripts/train_model.py`
+- Automated test suite (pytest, 12 tests) covering data, models, and API
+- CI pipeline with GitHub Actions
+- Drift detection utilities (PSI, KS-test) in `src/monitoring/`
+
 ## Future Enhancements
 
 - Real-world data validation
-- FastAPI deployment
 - Docker containerisation
-- CI/CD automation
 - MLflow experiment tracking
 - Real-time monitoring dashboards
 
@@ -321,7 +381,7 @@ Validation using historical operational support-ticket data is required before d
 ## Repository Structure
 
 ```text
-AI_Support_Operations_SLA_Breach_Prediction/
+ai-support-sla-breach-prediction/
 │
 ├── 01_Data/
 │   ├── raw data/
@@ -341,18 +401,29 @@ AI_Support_Operations_SLA_Breach_Prediction/
 │   ├── SLA Breach Prediction Model.docx
 │   └── Professional_Risk_Assumptions_Register.xlsx
 │
-├── models/
-│   └── final_sla_breach_pipeline.joblib
+├── src/
+│   ├── config.py              # Centralised settings
+│   ├── api/                   # FastAPI app, routes, schemas
+│   ├── data/                  # Loading, validation, preprocessing
+│   ├── features/              # Feature engineering
+│   ├── models/                # Train, predict, evaluate
+│   └── monitoring/            # Drift detection, metrics
 │
-├── .github/
-│   └── workflows/
-│       └── ci.yml
+├── scripts/
+│   └── train_model.py         # Trains and saves the pipeline
 │
-├── README.md 07_triage_explanation_layer.py
+├── tests/                     # pytest suite (data, models, API)
+│
+├── models/                    # sla_breach_pipeline.joblib (generated, gitignored)
+│
+├── .github/workflows/         # CI pipeline
+│
+├── 07_triage_explanation_layer.py
+├── main.py                    # API entry point
 ├── requirements.txt
+├── pyproject.toml
 ├── .gitignore
 └── LICENSE
-
 ```
 
 ---
