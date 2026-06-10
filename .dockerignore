@@ -1,0 +1,18 @@
+.git
+.github
+.pytest_cache
+__pycache__
+*.pyc
+venv
+.env
+logs
+models
+data
+02_Notebooks
+03_Reports_and_Templates
+01_Data/raw data
+01_Data/processed data/cleaned_support_sla_sample.csv
+*.md
+tests
+htmlcov
+.coverage

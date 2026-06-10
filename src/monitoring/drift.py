@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 from scipy.stats import ks_2samp, chi2_contingency
 from loguru import logger
-from typing import Dict, Any
+from typing import Any, Dict, Tuple
 
 
 class DriftDetector:
