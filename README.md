@@ -6,6 +6,9 @@
 ![Status](https://img.shields.io/badge/Status-Completed-success)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
+**🔴 Live Demo:** [API Health](https://ai-support-sla-breach-prediction.onrender.com/health) · [Interactive API Docs](https://ai-support-sla-breach-prediction.onrender.com/docs)
+*(hosted on Render free tier — first request after idle takes ~50s to wake)*
+
 ---
 
 ## Overview
