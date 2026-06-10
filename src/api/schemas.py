@@ -1,6 +1,6 @@
 """Pydantic schemas for API requests/responses."""
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional, List, Dict, Any
 
 
@@ -42,7 +42,9 @@ class PredictionResponse(BaseModel):
 
 class HealthResponse(BaseModel):
     """Response schema for health check."""
-    
+
+    model_config = ConfigDict(protected_namespaces=())
+
     status: str = Field(..., description="Service status")
     version: str = Field(..., description="API version")
     model_loaded: bool = Field(..., description="Model availability")
