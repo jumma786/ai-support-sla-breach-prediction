@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sla-breach-prediction"
+version = "2.0.0"
+description = "Production-ready ML pipeline for predicting customer support SLA breaches"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "Jumma Mohammad", email = "jummamohammad477@gmail.com"}]
+keywords = ["machine-learning", "sla-prediction", "mlops", "fastapi"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "flake8>=6.0",
+    "mypy>=1.0",
+    "ruff>=0.1.0"
+]
+mlops = [
+    "mlflow>=2.0",
+    "dvc>=3.0",
+    "optuna>=3.0"
+]
+serving = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0"
+]
+monitoring = [
+    "shap>=0.42.0",
+    "lime>=0.2.0",
+    "evidently>=0.4.0"
+]
