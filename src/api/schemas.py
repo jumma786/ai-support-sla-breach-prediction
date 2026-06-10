@@ -52,8 +52,10 @@ class HealthResponse(BaseModel):
 
 class BatchPredictionRequest(BaseModel):
     """Request schema for batch predictions."""
-    
-    records: List[Dict[str, Any]] = Field(..., description="Records to predict")
+
+    records: List[TicketPredictionRequest] = Field(
+        ..., min_length=1, description="Tickets to predict"
+    )
 
 
 class BatchPredictionResponse(BaseModel):

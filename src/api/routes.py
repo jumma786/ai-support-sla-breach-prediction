@@ -90,7 +90,7 @@ async def predict_batch(request: BatchPredictionRequest):
         raise HTTPException(status_code=503, detail="Model not loaded")
     
     try:
-        X = pd.DataFrame(request.records)
+        X = pd.DataFrame([record.dict() for record in request.records])
         predictions, probabilities = predictor.predict(X)
         
         results = []
